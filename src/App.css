@@ -1,21 +1,55 @@
 .Container{
+  display:flex;
   margin-left: auto;
   margin-right: auto;
-  width:375px;
+  width:360px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .drapeau{
   margin-left: auto;
   margin-right: auto;
-  width:375px;
+  width:360px;
 }
 
 .btncontainer{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
+  gap: 10px;
 }
 
 .root{
   background-color: beige;
+}
+
+body{
+  background-color: lightgray;
+}
+
+.bonne{
+color: green;
+font-size:18px;
+font-weight:large;
+margin-top: 10px;
+}
+
+.mauvaise{
+  color:red;
+  font-size:18px;
+  font-weight:large;
+  margin-top: 10px;
+}
+
+h1{
+  font-size: 14px;
+  justify-self: center;
+  align-self: center;
+}
+
+.btn{
+  border-radius: 20px;
+  margin-top: 10px;
 }

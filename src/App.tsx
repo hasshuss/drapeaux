@@ -1,82 +1,73 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Data from './data/pays.json';
 
-const Pays = Data;
+interface Country {
+  name_fr: string;
+  flag: string;
+}
 
-const App = () => {
+const Pays: Country[] = Data;
+
+const App: React.FC = () => {
   useEffect(() => {
+    generateRandomOptions();
   }, []);
 
-  const Random1 = Math.floor(Math.random() * 217);
-  let Random2 = Math.floor(Math.random() * 217);
-  let Random3 = Math.floor(Math.random() * 217);
-  let Random4 = Math.floor(Math.random() * 217);
+  const [isBonneVisible, setIsBonneVisible] = useState(false);
+  const [isMauvaiseVisible, setIsMauvaiseVisible] = useState(false);
+  const [options, setOptions] = useState<number[]>([]);
+  const [correctAnswerIndex, setCorrectAnswerIndex] = useState<number | null>(null);
+  const [showNextButton, setShowNextButton] = useState(false); // Nouveau state pour gérer l'affichage du bouton "Suivant"
 
-  while (Random2 === Random1) {
-    Random2 = Math.floor(Math.random() * 217);
-  }
-  while (Random3 === Random1 || Random3 === Random2) {
-    Random3 = Math.floor(Math.random() * 217);
-  }
-  while (Random4 === Random1 || Random4 === Random2 || Random4 === Random3) {
-    Random4 = Math.floor(Math.random() * 217);
-  }
+  const generateRandomOptions = () => {
+    const randomIndices: number[] = [];
+    while (randomIndices.length < 4) {
+      const randomIndex = Math.floor(Math.random() * Pays.length);
+      if (!randomIndices.includes(randomIndex)) {
+        randomIndices.push(randomIndex);
+      }
+    }
+    setOptions(randomIndices);
+    setCorrectAnswerIndex(Math.floor(Math.random() * randomIndices.length));
+    setIsBonneVisible(false);
+    setIsMauvaiseVisible(false);
+    setShowNextButton(false); // Cacher le bouton "Suivant" après avoir généré de nouvelles options
+  };
 
+  const handleOptionClick = (index: number) => {
+    if (correctAnswerIndex !== null && index === correctAnswerIndex) {
+      setIsBonneVisible(true);
+      setIsMauvaiseVisible(false);
+      setShowNextButton(true); // Afficher le bouton "Suivant" après que l'utilisateur a répondu
+    } else {
+      setIsBonneVisible(false);
+      setIsMauvaiseVisible(true);
+    }
+   
+  };
 
-  const Random5 = Math.floor(Math.random() * 4);
-  const Drapeau = Pays[Random1].flag;
+  const handleNextClick = () => {
+    generateRandomOptions();
+  };
 
-  console.log(Random5)
-if (Random5===0) {
   return (
     <div className="Container">
-      <img className='drapeau' src={Drapeau} alt={Pays[Random1].name_fr}/>
+      <h1>A quel pays appartient ce magnifique drapeau ?</h1>
+      {correctAnswerIndex !== null && options[correctAnswerIndex] !== undefined && (
+        <img className='drapeau' src={Pays[options[correctAnswerIndex]].flag} alt={Pays[options[correctAnswerIndex]].name_fr} />
+      )}
       <div className='btncontainer'>
-      <button>{Pays[Random1].name_fr}</button>
-      <button>{Pays[Random2].name_fr}</button>
-      <button>{Pays[Random3].name_fr}</button>
-      <button>{Pays[Random4].name_fr}</button>
+        {options.map((index, i) => (
+          <button key={i} className='btn' onClick={() => handleOptionClick(i)}>{Pays[index].name_fr}</button>
+        ))}
       </div>
-    </div>)
-}
-if (Random5===1) {
-  return (
-    <div className="Container">
-      <img className='drapeau' src={Drapeau} alt={Pays[Random1].name_fr}/>
-      <div className='btncontainer'>
-      <button>{Pays[Random2].name_fr}</button>
-      <button>{Pays[Random1].name_fr}</button>
-      <button>{Pays[Random3].name_fr}</button>
-      <button>{Pays[Random4].name_fr}</button>
-      </div>
-    </div>)
-}
-if (Random5===2) {
-  return (
-    <div className="Container">
-      <img className='drapeau' src={Drapeau} alt={Pays[Random1].name_fr}/>
-      <div className='btncontainer'>
-      <button>{Pays[Random3].name_fr}</button>
-      <button>{Pays[Random2].name_fr}</button>
-      <button>{Pays[Random1].name_fr}</button>
-      <button>{Pays[Random4].name_fr}</button>
-      </div>
-    </div>)
-}
-if (Random5===3) {
-  return (
-    <div className="Container">
-      <img className='drapeau' src={Drapeau} alt={Pays[Random1].name_fr}/>
-      <div className='btncontainer'>
-      <button>{Pays[Random3].name_fr}</button>
-      <button>{Pays[Random2].name_fr}</button>
-      <button>{Pays[Random4].name_fr}</button>
-      <button>{Pays[Random1].name_fr}</button>
-      </div>
-    </div>)
-}
-return null;
+      {isBonneVisible && <div className='bonne'>Bonne réponse !</div>}
+      {isMauvaiseVisible && <div className='mauvaise'>Mauvaise réponse !</div>}
+      
+      {showNextButton && <button className='btn' onClick={handleNextClick}>Suivant</button>}
+    </div>
+  );
 };
 
 export default App;
