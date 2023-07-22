@@ -1,0 +1,23 @@
+@mixin margin {
+margin-right:auto;
+margin-left:auto;
+max-width: 1220px;
+  }
+
+@mixin background($opacity){
+  width:100%;
+  height:100%;
+  position:absolute;
+  background-color:black;
+  opacity: $opacity;
+  border-radius:20px;
+}
+
+@mixin shadow{
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+@mixin textshadow{
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+

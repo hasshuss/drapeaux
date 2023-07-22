@@ -1,0 +1,74 @@
+@import './mixins.scss';
+
+
+.Container{
+  display:flex;
+  margin-left: auto;
+  margin-right: auto;
+  width:360px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.drapeau{
+  margin-left: auto;
+  margin-right: auto;
+  width:320px;
+  height:200px;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.btncontainer{
+  width:100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  margin-left: auto;
+  margin-right:auto;  
+}
+
+.root{
+  background-color: beige;
+}
+
+body{
+  background-color: lightgray;
+}
+
+.bonne{
+color: green;
+font-size:18px;
+font-weight:large;
+margin-top: 10px;
+justify-self: center;
+align-self: center;
+
+}
+
+.mauvaise{
+  color:red;
+  font-size:18px;
+  font-weight:large;
+  margin-top: 10px;
+  justify-self: center;
+  align-self: center;
+}
+
+
+h1{
+  font-size: 14px;
+  justify-self: center;
+  align-self: center;
+}
+
+.btn{
+  border-radius: 20px;
+  margin-top: 10px;
+  width:150px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 15px;
+  padding-bottom:15px
+}
